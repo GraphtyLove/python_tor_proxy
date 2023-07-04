@@ -1,31 +1,31 @@
-# TorProxy
-TorProxy is a Python library that allows you to send HTTP requests over the TOR network. 
+# Proxtor
+Proxtor is a Python library that allows you to send HTTP requests over the TOR network. 
 It simplifies interacting with TOR and helps with IP renewal, sending GET/POST requests, and more.
 
 ## Installation
-TorProxy can be installed using pip:
+Proxtor can be installed using pip:
 
 ```bash
-pip install torproxy
+pip install Proxtor
 ```
 
 ## Requirements
-TorProxy requires Tor to be installed on your machine and running.
+Proxtor requires Tor to be installed on your machine and running.
 It also assumes that the Tor control port is set to 9051 and that the password is set to 'your_password' 
-(the password and port can be changed when initializing TorProxy).
+(the password and port can be changed when initializing Proxtor).
 
 The package as been written in python3.11 but should work with any version of python 3.7+.
 
-A Docker image is available [here](https://hub.docker.com/r/dperson/torproxy/).
+A Docker image is available [here](https://hub.docker.com/r/dperson/Proxtor/).
 
 If you want to do something more custom, an example Dockerfile is available in the repository.
 
 ## Usage
 ### Initialization
-TorProxy is very easy to use. Here is an example of how to use it:
+Proxtor is very easy to use. Here is an example of how to use it:
 
 ```python
-from torproxy import Tor
+from Proxtor import Tor
 tor = Tor(tor_password='your_password', tor_port=9051)
 
 # Get request

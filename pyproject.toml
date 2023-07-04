@@ -5,7 +5,7 @@ description = "A simple python proxy for Tor"
 authors = ["GraphtyLove <maxim.berge@gmail.com>"]
 license = "MIT"
 readme = "README.md"
-repository = "https://github.com/GraphtyLove/redis_client_python"
+repository = "https://github.com/GraphtyLove/python_tor_proxy"
 packages = [{include = "TorProxy"}]
 classifiers = [
     "Intended Audience :: Developers",

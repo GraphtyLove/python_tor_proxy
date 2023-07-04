@@ -4,7 +4,7 @@ FROM python:3.10
 # Make a directory at /app
 RUN mkdir /app
 # Copy all the files in the repo in /app
-COPY . /app
+COPY .. /app
 # Define /app as the working directory
 WORKDIR /app
 
