@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "TorProxy"
+version = "1.0.0"
+description = "A simple python proxy for Tor"
+authors = ["GraphtyLove <maxim.berge@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/GraphtyLove/redis_client_python"
+packages = [{include = "TorProxy"}]
+classifiers = [
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.11",
+    "Typing :: Typed",
+]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+redis = "4.3.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
