@@ -40,7 +40,7 @@ print(response.content)
 # Tor ip
 print(tor.get_ip())
 # Local machine ip
-print(tor.get_ip(tor_ip=False))
+print(tor.get_ip(show_tor_ip=False))
 
 # Get a new IP (won't work 100% of the time as it depends on the exit node)
 tor.get_new_ip(max_retries=5)

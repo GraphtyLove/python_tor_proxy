@@ -2,7 +2,7 @@
 Module for TOR network interaction via Python requests.
 """
 
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, List
 import requests
 import os
 import time
@@ -33,29 +33,31 @@ class Tor:
         ip_history (list): A history of previous IPs used in the TOR network.
     """
 
-    _get_ip_url = "https://nordvpn.com/wp-admin/admin-ajax.php?action=get_user_info_data"
+    _get_ip_url = (
+        "https://nordvpn.com/wp-admin/admin-ajax.php?action=get_user_info_data"
+    )
 
     def __init__(
-            self,
-            tor_password: str = os.environ.get("TOR_PASSWORD", "YOUR_PASSWORD_HERE"),
-            tor_port: int = 9050,
-            headers: Optional[Dict[str, str]] = None
+        self,
+        tor_password: str = os.environ.get("TOR_PASSWORD", "YOUR_PASSWORD_HERE"),
+        tor_port: int = 9050,
+        headers: Optional[Dict[str, str]] = None,
     ):
         # Initialize TOR
         os.system("service tor start")
 
         self._proxies = {
-            'http': f'socks5h://127.0.0.1:{tor_port}',
-            'https': f'socks5h://127.0.0.1:{tor_port}'
+            "http": f"socks5h://127.0.0.1:{tor_port}",
+            "https": f"socks5h://127.0.0.1:{tor_port}",
         }
         self._tor_password = tor_password
         self.headers = headers if headers is not None else {}
         self._controller = Controller.from_port(port=9051)
         self._session = requests.Session()
         self._session.proxies = self._proxies
-        self._session.headers = self.headers
+        self._session.headers = self.headers  # type: ignore
 
-        self.ip_history = []
+        self.ip_history: List[str] = []
 
     def _merge_headers(self, new_headers: Optional[Dict[str, str]]) -> Dict[str, str]:
         """
@@ -92,7 +94,9 @@ class Tor:
             logger.info("Renewing IP failed, retrying...")
         logger.error(f"Failed to renew IP after {max_retries} retries.")
 
-    def get_request(self, url: str, headers: Optional[Dict[str, str]] = None) -> requests.Response:
+    def get_request(
+        self, url: str, headers: Optional[Dict[str, str]] = None
+    ) -> requests.Response:
         """
         Sends a GET request via TOR.
 
@@ -105,10 +109,10 @@ class Tor:
         return response
 
     def post_request(
-            self,
-            url: str,
-            headers: Optional[Dict[str, str]] = None,
-            request_body: Optional[Dict[str, Any]] = None
+        self,
+        url: str,
+        headers: Optional[Dict[str, str]] = None,
+        request_body: Optional[Dict[str, Any]] = None,
     ) -> requests.Response:
         """
         Sends a POST request via TOR.
@@ -123,20 +127,20 @@ class Tor:
             url,
             proxies=self._proxies,
             headers=headers,
-            json=request_body if request_body is not None else {}
+            json=request_body if request_body is not None else {},
         )
         return response
 
-    def get_ip(self, tor_ip: bool = True) -> str:
+    def get_ip(self, show_tor_ip: bool = True) -> str:
         """
         Returns current IP, either local or TOR.
 
         :param tor_ip: If True, return the TOR IP, else return the local IP.
         :return: Current IP as a string.
         """
-        local_ip = requests.get(self._get_ip_url).json().get("ip")
+        local_ip = requests.get(self._get_ip_url).json().get("ip", "")
 
-        if tor_ip:
+        if show_tor_ip:
             tor_ip = self.get_request(self._get_ip_url).json().get("ip")
             if local_ip == tor_ip:
                 logger.error("Your IP is not protected!")
