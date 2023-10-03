@@ -1,5 +1,5 @@
 PySocks==1.7.1
 socks==0
 stem==1.8.0
-urllib3==1.26.11
+urllib3==1.26.17
 requests==2.31.0
